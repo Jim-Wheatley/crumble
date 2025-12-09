@@ -1,0 +1,179 @@
+Agents of the Crumbleverse
+Forge your agentic-hero biscuit to take on the dreaded Mind Crumble
+This workshop invites participants to step into a playful, narrative-driven world where 
+biscuits become adventurers in a Fantasy-RPG-inspired activity. Each team creates an 
+AI-powered �biscuit agent� in Copilot Studio, giving it unique stats, personality, and 
+flavour-based abilities. Together, these agents face a formidable villain�the Mind 
+Crumble, a hive of broken crumbs that seeks to drain creativity and individuality from 
+the biscuit realm.
+The battle unfolds using a simple combat system, built with Power Automate. The aim 
+- Teams combine their biscuit agents� abilities to overcome the Mind Crumble and 
+restore individuality to the world.
+
+The adventure party is a team of biscuits made of the following characters and classes:
+
+*	Viennese Whirl = Wizard (ancient magic) 
+*	Chocolate HobNob = Barbarian (oaty rage) 
+*	Bourbon = Rogue (dark and stealthy) 
+*	Custard Cream = Cleric (sweet healer) 
+*	Jammie Dodger = Bard (fruity charm) 
+*	Chocolate Digestive = Fighter (solid and dependable) 
+
+Each region divides into six teams - each team creates the agent for one of the biscuit 
+characters. Ideally teams are around 5 people. We can have more than one team per 
+biscuit if needed.
+The meaning behind the narrative
+This concept is more than a fun game. It symbolises:
+*	The power of agentic systems: as diverse biscuit character classes - each with 
+unique abilities - collaborate autonomously to overcome the dreaded Mind 
+Crumble.
+*	Creativity as resistance: The Mind Crumble represents homogeneity and loss of 
+individuality. Defeating it mirrors the power of imagination and diversity in 
+problem-solving. 
+*	Storytelling as engagement: By framing technical tools (Copilot Studio, Power 
+Automate) within a narrative, we make innovation accessible and exciting.
+How it will work
+1. Build the Agent Interface
+*	The teams will use Copilot Studio to design a simple UI for each player�s biscuit 
+agent.
+*	Include:
+o	An adaptive card character sheet with: Class, HP, Attack, Defense + 
+name, background, profile pic and traits
+o	A button that triggers their characters special attack or ability
+o	Each biscuit has a specific attack or ability - 
+o	Wizard (Viennese Whirl) - Arcane Waltz: Deals magical damage and 
+weakens the Mind Crumble�s defences for the next round.  
+o	Barbarian (Chocolate Hobnob) - Oaty Smash: Heavy physical damage, 
+best for breaking through armour-like crust.  
+o	Rogue (Bourbon) - Chocolate Shadow Strike: Sneaky attack that deals 
+damage and protects the rogue.  
+o	Cleric (Custard Cream) - Sweet Salvation: Heals allies and shields them 
+from Mind Crumble�s psychic crumb attacks.  
+o	Bard (Jammie Dodger) - Jam Anthem: Buffs allies� attack rolls for the next 
+round.
+o	Fighter (Chocolate Digestive) - Shield of Sweet Steel: The Fighter 
+hardens its chocolate coating into an impenetrable shield, then charges 
+forward with biscuit-breaking force.
+*	The different teams must combine all attacks and abilities to defeat the Mind 
+Crumble
+2. Connect to Shared Data Source
+*	Store all agent and villain data in Dataverse or a SharePoint list.
+*	Each agent record includes player stats; MindCrumble is a single record with a 
+large HP pool.
+3. Configure the Attack Button
+*	In Power Apps:
+o	Add a button control.
+o	Set its OnSelect property to trigger a Power Automate flow.
+?	OnSelect = PowerAutomateFlow.Run(PlayerID, AttackStats)
+o	This passes the player�s ID and attack stats to the flow.
+4. Power Automate Flow
+*	Triggered by the button click.
+*	Performs:
+o	Attack or Ability based on the character type
+o	For Attacks: Updates MindCrumble�s HP in the shared data source.
+o	For Abilities: Updates other character stats
+o	Sends real-time updates to Teams or Power BI dashboard.
+5. Real-Time Feedback
+*	Use adaptive cards in Teams or a Power BI live dashboard so everyone sees HP 
+changes and attack logs instantly.
+*	Cards in Teams or a Power BI live dashboard so everyone sees HP changes and 
+attack logs instantly
+Combat System Design
+Core Principles:
+*	Turn based: players wait in a queue for their turn to trigger their attack or ability
+o	The Mind Crumble takes a turn after each player
+*	Stats: Each biscuit agent has HP, Attack, and Defence. 
+*	Actions: Players have one Attack or Ability (one per turn). 
+*	Mind Crumble: Pre-made villain with HP and an attack that hits all players. 
+*	Win Condition: Mind Crumble is defeated after every player has acted at least 
+once. 
+Step 1: Player Flow
+1.	Player creates their biscuit agent in Copilot Studio (HP, Attack, Defence, 
+Ability/Attack).
+*	Class abilities/attacks are pre-defined - the player must connect their agent to 
+the corrent ability/attack 
+2.	They join the game (they trigger a Power Automate flow to add them to the game 
+when they�re ready). 
+o	the order players join the game determines the order of player turns
+?	Could we assign players an order ID when they join and that is their 
+turn number?
+3.	When it is the players turn they can trigger their Attack or Ability: 
+*	Attack: Damage = Player Attack � Mind Crumble Defence. 
+*	Ability: Apply a simple effect (e.g., +2 damage next turn, heal 5 HP).   
+4.	Update Mind Crumble HP and player stats in a shared table (Dataverse or Excel). 
+5.	Update player turn count to +1
+Character Stats
+Agent
+Attack / Ability
+HP
+Attack
+Defence
+Wizard � 
+Viennese Whirl
+Ability: Arcane Whirl � Lowers Mind Crumble�s 
+defence by 2 points for the next three attacks.
+15
+-
+1
+Barbarian � 
+Chocolate 
+Hobnob
+Attack: Oaty Rage � Deals +3 damage (ignores 
+defence). 
+20
+4
+0
+Cleric � Custard 
+Cream
+Ability: Sweet Salvation � Heals +2 HP to the three 
+players who previously took a turn, +1 defence to 
+the next three players who take a turn
+16
+-
+1
+Rogue � Bourbon
+Attack: Shadow Dunk� Deals +2 damage and 
+gives self +2 defence for next round. 
+14
+3
+1
+Bard � Jammie 
+Dodger
+Ability: Jam Anthem � Boosts next three ally 
+attacks by +2 damage. 
+15
+-
+1
+Fighter � 
+Chocolate 
+Digestive
+Attack: Shield of Sweet Steel � Deals +2 damage 
+and adds +2 defence to self for one round.
+18
+3
+2
+Step 2: Mind Crumble Turn
+*	After each player action, the Mind Crumble triggers either: 
+o	If Mind Crumble HP to � 5 WHEN there are players waiting to have a turn
+?	Trigger Crumbdrain ability (steals 1 HP from each player to heal)
+o	If Mind Crumble has >5 HP 
+?	Trigger Crumbstorm attack - Deals fixed damage (3 HP) to all players. 
+Agent
+Attacks / Abilities
+HP
+Attack
+Defence
+The Mind Crumble
+Crumbstorm / Crumbdrain
+50
+3
+2
+Step 3: End Conditions
+*	If after Mind Crumble turn a player HP � 0 
+o	Player has crumbled message
+*	Combat ends when: 
+o	Mind Crumble HP � 0 AND 
+o	all player in the game turn count � 1
+?	Trigger Mind Crumble defeated message
+*	If all players HP � 0 
+o	Trigger Mind Crumble victory message
